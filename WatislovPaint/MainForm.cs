@@ -73,7 +73,9 @@ namespace WatislovPaint
             int dx = 0;
             int dy = 0;
 
-            for(int k = 0; k < ImagePictureBox.Image.Width * ImagePictureBox.Image.Height; k++)
+            Progress.Maximum = ImagePictureBox.Image.Width * ImagePictureBox.Image.Height;
+
+            for (int k = 0; k < ImagePictureBox.Image.Width * ImagePictureBox.Image.Height; k++)
             {
                 x = random.Next(ImagePictureBox.Image.Width);
                 y = random.Next(ImagePictureBox.Image.Height);
@@ -119,43 +121,18 @@ namespace WatislovPaint
                             }
                         }
                     }
-
-                    /*List<Byte> r_colors = new List<Byte>();
-                    List<Byte> g_colors = new List<Byte>();
-                    List<Byte> b_colors = new List<Byte>();
-
-                    r_colors.Add(curr_color.R);
-                    g_colors.Add(curr_color.G);
-                    b_colors.Add(curr_color.B);*/
                     
                     for(int i = 0; i <= dx; i++)
                     {
                         is_painted[x + i, (y + dy) / 2] = true;
-                        /*r_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).R);
-                        g_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).G);
-                        b_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).B);*/
                     }
                     for (int i = 0; i <= dy; i++)
                     {
                         is_painted[(x + dx) / 2, y + i] = true;
-                        /*r_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).R);
-                        g_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).G);
-                        b_colors.Add(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, (y + dy) / 2).B);*/
                     }
-
-                    /*int r_sum = 0, g_sum = 0, b_sum = 0; 
-                    for(int i=0; i < r_colors.Count; i++)
-                    {
-                        r_sum += r_colors[i];
-                        g_sum += g_colors[i];
-                        b_sum += b_colors[i];
-                    }*/
-                    //curr_color = Color.FromArgb(r_sum / r_colors.Count, g_sum / r_colors.Count, b_sum / r_colors.Count);
-                   /* r_colors.Clear();
-                    g_colors.Clear();
-                    b_colors.Clear();*/
                     brush.Color = curr_color;
                     graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                    Progress.Value++;
                 }
             }
         }

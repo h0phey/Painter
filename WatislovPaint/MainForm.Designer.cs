@@ -103,11 +103,11 @@
             // Progress
             // 
             this.Progress.Location = new System.Drawing.Point(288, 38);
-            this.Progress.Maximum = 1;
             this.Progress.Name = "Progress";
             this.Progress.Size = new System.Drawing.Size(541, 23);
             this.Progress.Step = 1;
             this.Progress.TabIndex = 1;
+            this.Progress.UseWaitCursor = true;
             // 
             // label1
             // 
