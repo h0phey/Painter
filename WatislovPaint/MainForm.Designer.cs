@@ -36,6 +36,8 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.Progress = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.ExportButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DrawingPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -45,9 +47,9 @@
             this.ExitButton.BackColor = System.Drawing.Color.Red;
             this.ExitButton.Cursor = System.Windows.Forms.Cursors.No;
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ExitButton.Location = new System.Drawing.Point(1858, 12);
+            this.ExitButton.Location = new System.Drawing.Point(1883, 12);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(64, 50);
+            this.ExitButton.Size = new System.Drawing.Size(25, 25);
             this.ExitButton.TabIndex = 0;
             this.ExitButton.UseVisualStyleBackColor = false;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
@@ -118,6 +120,32 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Progress:";
             // 
+            // ExportButton
+            // 
+            this.ExportButton.BackColor = System.Drawing.Color.Turquoise;
+            this.ExportButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExportButton.Enabled = false;
+            this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportButton.Font = new System.Drawing.Font("AlumniSansBold", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ExportButton.ForeColor = System.Drawing.Color.White;
+            this.ExportButton.Location = new System.Drawing.Point(1745, 12);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(132, 49);
+            this.ExportButton.TabIndex = 7;
+            this.ExportButton.Text = "Export";
+            this.ExportButton.UseVisualStyleBackColor = false;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(835, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(78, 17);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Completed!";
+            this.label2.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -125,6 +153,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Progress);
             this.Controls.Add(this.StartButton);
@@ -154,6 +184,8 @@
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.ProgressBar Progress;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ExportButton;
+        private System.Windows.Forms.Label label2;
     }
 }
 

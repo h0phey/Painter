@@ -14,8 +14,9 @@ namespace WatislovPaint
     {
         Graphics graphics;
         SolidBrush brush;
+        Bitmap bitmap;
 
-        int color_accuracy = 10;
+        int color_accuracy = 11;
 
         Random random = new Random();
 
@@ -51,6 +52,8 @@ namespace WatislovPaint
                     }
                     StartButton.Enabled = true;
                     graphics.Clear(Color.White);
+                    ExportButton.Enabled = false;
+                    label2.Visible = false;
                 }
                 catch
                 {
@@ -74,6 +77,7 @@ namespace WatislovPaint
             int dy = 0;
 
             Progress.Maximum = ImagePictureBox.Image.Width * ImagePictureBox.Image.Height;
+            bitmap = new Bitmap(ImagePictureBox.Image.Width, ImagePictureBox.Image.Height);
 
             for (int k = 0; k < ImagePictureBox.Image.Width * ImagePictureBox.Image.Height; k++)
             {
@@ -132,9 +136,17 @@ namespace WatislovPaint
                     }
                     brush.Color = curr_color;
                     graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                    using(Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                        g.Dispose();
+                    }
+                    DrawingPictureBox.Image = bitmap;
                     Progress.Value++;
                 }
             }
+            ExportButton.Enabled = true;
+            label2.Visible = true;
         }
 
         public Image Resizer(Image image, bool icase)//Resize image to fit in picturebox
@@ -158,6 +170,16 @@ namespace WatislovPaint
                 g.DrawImage(image, 0, 0, bmp.Width, bmp.Height);
                 g.Dispose();
                 return bmp;
+            }
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if(saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap picture = new Bitmap(bitmap);
+                picture.Save(saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
     }
