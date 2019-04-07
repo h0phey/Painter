@@ -16,7 +16,7 @@ namespace WatislovPaint
         SolidBrush brush;
         Bitmap bitmap;
 
-        int color_accuracy = 11;
+        int color_accuracy = 6;
 
         Random random = new Random();
 
@@ -135,11 +135,23 @@ namespace WatislovPaint
                         is_painted[(x + dx) / 2, y + i] = true;
                     }
                     brush.Color = curr_color;
-                    graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
-                    using(Graphics g = Graphics.FromImage(bitmap))
+                    if(dx == 0 && dy == 0)
                     {
-                        g.FillEllipse(brush, new Rectangle(x, y, dx, dy));
-                        g.Dispose();
+                        graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                        using (Graphics g = Graphics.FromImage(bitmap))
+                        {
+                            g.FillRectangle(brush, new Rectangle(x, y, dx, dy));
+                            g.Dispose();
+                        }
+                    }
+                    else
+                    {
+                        graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                        using (Graphics g = Graphics.FromImage(bitmap))
+                        {
+                            g.FillEllipse(brush, new Rectangle(x, y, dx, dy));
+                            g.Dispose();
+                        }
                     }
                     DrawingPictureBox.Image = bitmap;
                     Progress.Value++;
