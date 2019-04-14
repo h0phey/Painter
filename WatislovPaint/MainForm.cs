@@ -16,7 +16,7 @@ namespace WatislovPaint
         SolidBrush brush;
         Bitmap bitmap;
 
-        int color_accuracy = 6;
+        int color_accuracy = 5;
 
         Random random = new Random();
 
@@ -69,6 +69,7 @@ namespace WatislovPaint
 
         public void Draw()//Drawing func
         {
+            graphics.Clear(Color.Black);
             bool[,] is_painted = new bool[ImagePictureBox.Image.Width, ImagePictureBox.Image.Height];
 
             int x;
@@ -76,16 +77,24 @@ namespace WatislovPaint
             int dx = 0;
             int dy = 0;
 
+            brush.Color = Color.Black;
             Progress.Maximum = ImagePictureBox.Image.Width * ImagePictureBox.Image.Height;
+            Progress.Value = 0;
             bitmap = new Bitmap(ImagePictureBox.Image.Width, ImagePictureBox.Image.Height);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.FillRectangle(brush, new Rectangle(0, 0, ImagePictureBox.Image.Width, ImagePictureBox.Image.Height));
+                g.Dispose();
+            }
 
             for (int k = 0; k < ImagePictureBox.Image.Width * ImagePictureBox.Image.Height; k++)
             {
                 x = random.Next(ImagePictureBox.Image.Width);
                 y = random.Next(ImagePictureBox.Image.Height);
+                Progress.Value++;
                 if (is_painted[x, y] == true)
                 {
-                    k--;
+
                 }
                 else
                 {
@@ -117,7 +126,7 @@ namespace WatislovPaint
                     {
                         for (int o = 0; o <= dy; o++)
                         {
-                            if (Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).R - curr_color.R) > color_accuracy && Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).G - curr_color.G) > color_accuracy && Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).B - curr_color.B) > color_accuracy)
+                            if (Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).R - curr_color.R) > color_accuracy && Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).G - curr_color.G) > color_accuracy && Math.Abs(((Bitmap)ImagePictureBox.Image).GetPixel(x + i, y + o).B - curr_color.B) > color_accuracy && is_painted[x + i, y + o] == true)
                             {
                                 dx = i;
                                 dy = o;
@@ -125,36 +134,22 @@ namespace WatislovPaint
                             }
                         }
                     }
-                    
-                    for(int i = 0; i <= dx; i++)
+
+                    for (int i = 0; i <= dx; i++)
                     {
-                        is_painted[x + i, (y + dy) / 2] = true;
-                    }
-                    for (int i = 0; i <= dy; i++)
-                    {
-                        is_painted[(x + dx) / 2, y + i] = true;
+                        for (int o = 0; o <= dy; o++)
+                        {
+                            is_painted[x + i, y + o] = true;
+                        }
                     }
                     brush.Color = curr_color;
-                    if(dx == 0 && dy == 0)
+                    graphics.FillRectangle(brush, new Rectangle(x, y, dx, dy));
+                    using (Graphics g = Graphics.FromImage(bitmap))
                     {
-                        graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
-                        using (Graphics g = Graphics.FromImage(bitmap))
-                        {
-                            g.FillRectangle(brush, new Rectangle(x, y, dx, dy));
-                            g.Dispose();
-                        }
-                    }
-                    else
-                    {
-                        graphics.FillEllipse(brush, new Rectangle(x, y, dx, dy));
-                        using (Graphics g = Graphics.FromImage(bitmap))
-                        {
-                            g.FillEllipse(brush, new Rectangle(x, y, dx, dy));
-                            g.Dispose();
-                        }
+                        g.FillRectangle(brush, new Rectangle(x, y, dx, dy));
+                        g.Dispose();
                     }
                     DrawingPictureBox.Image = bitmap;
-                    Progress.Value++;
                 }
             }
             ExportButton.Enabled = true;
